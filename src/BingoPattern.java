@@ -10,12 +10,22 @@ public abstract class BingoPattern implements Runnable{
 
     @Override
     public void run() {
-//        for (BingoChecker bc : BingoCheckers) {
-//            bc = new Thread(new BingoChecker());
-//        }
-//
-//        for (BingoChecker bc : BingoCheckers) {
-//            bc.start();
-//        }
+        Thread[] checkerRowThreads = new Thread[5];
+        Thread[] checkerColumnThreads = new Thread[5];
+        for (int j = 1; j <= 5; j++) {
+            BingoCheckers.add(new BingoRowChecker(card, j));
+            BingoCheckers.add(new BingoColumnChecker(card, j));
+        }
+
+        if (BingoGame.isBingo) {
+            for (Thread thread: checkerRowThreads) {
+                thread.interrupt();
+            }
+
+            for (Thread thread: checkerColumnThreads) {
+                thread.interrupt();
+            }
+        }
+
     }
 }

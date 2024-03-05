@@ -32,20 +32,11 @@ public class BingoGame implements Runnable {
             System.out.println(card);
         }
 
-        Thread[] checkerRowThreads = new Thread[cnt];
-        for(int i = 0; i < cnt; i++) {
-            for (int j = 1; j <= 5; j++) {
-                checkerRowThreads[i] = new Thread(new BingoRowChecker(cards.get(i), j));
-                checkerRowThreads[i].start();
-            }
-        }
+        List<BingoPattern> bingoPatterns;
 
-        Thread[] checkerColumnThreads = new Thread[cnt];
-        for(int i = 0; i < cnt; i++) {
-            for (int j = 1; j <= 5; j++) {
-                checkerColumnThreads[i] = new Thread(new BingoColumnChecker(cards.get(i), j));
-                checkerColumnThreads[i].start();
-            }
+        for (int i = 0; i < cnt; i++) {
+//            BingoPattern bp = new BingoPattern() {
+//            }
         }
 
         // TODO randomly get number from 1-75 while not bingo
@@ -70,18 +61,6 @@ public class BingoGame implements Runnable {
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
-        }
-
-        if (isBingo) {
-            for (Thread thread: checkerRowThreads) {
-                thread.interrupt();
-            }
-
-            for (Thread thread: checkerColumnThreads) {
-                thread.interrupt();
-            }
-
-            System.exit(0);
         }
     }
 }
